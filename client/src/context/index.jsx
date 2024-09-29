@@ -32,9 +32,9 @@ export const StateContextProvider = ({ children }) => {
   }
 
   const getCampaigns = async () => {
-    const campaign = await contract.call('getCampaigns');
+    const campaigns = await contract.call('getCampaigns');
 
-    const parsedCampaigns = campaigns.map((campaign) => ({
+    const parsedCampaigns = campaigns.map((campaign, i) => ({
       owner: campaign.owner,
       title: campaign.title,
       description: campaign.description,
@@ -42,7 +42,7 @@ export const StateContextProvider = ({ children }) => {
       deadline: campaign.deadline.toNumber(),
       amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
       image: campaign.image,
-      pid: i
+      pId: i
     }));
 
     return parsedCampaigns;
