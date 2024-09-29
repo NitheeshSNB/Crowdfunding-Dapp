@@ -43,9 +43,19 @@ export const StateContextProvider = ({ children }) => {
       amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
       image: campaign.image,
       pid: i
-    }))
+    }));
+
+    return parsedCampaigns;
   }
 
+  const getMyCampaigns = async () => {
+    const allCampaigns = await getCampaigns();
+
+    const filteredCampaigns = allCampaigns.filter((campaign)=>
+    campaign.owner === address)
+
+    return filteredCampaigns;
+  }
   return (
     <StateContext.Provider
       value={{ 
@@ -54,6 +64,7 @@ export const StateContextProvider = ({ children }) => {
         connect,
         createCampaign: publishCampaign,
         getCampaigns,
+        getMyCampaigns
       }}
     >
       {children}
